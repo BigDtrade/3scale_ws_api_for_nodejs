@@ -322,7 +322,7 @@ module.exports = class Client
           response = new Response()
           response.success()
           callback response
-        else if response.statusCode == 403
+        else if response.statusCode in [400...422]
           callback _self._build_error_response xml
     request.write query
     request.end()
@@ -376,7 +376,7 @@ module.exports = class Client
       response.on 'end', () ->
         if response.statusCode == 201
           callback xml
-        else if response.statusCode == 403
+        else
           callback _self._build_error_response xml
     request.write query
     request.end()
